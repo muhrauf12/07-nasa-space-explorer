@@ -23,7 +23,7 @@ function showRandomFact() {
 }
 
 function showLoading() {
-  gallery.innerHTML = '<p>\ud83d\udd04 Loading space photos...</p>';
+  gallery.innerHTML = '<p class="loading">\ud83d\udd04 Loading space photos...</p>';
 }
 
 function fetchImages(start, end) {
@@ -45,7 +45,9 @@ function fetchImages(start, end) {
           `;
         } else if (item.media_type === 'video') {
           entry.innerHTML = `
-            <iframe src="${item.url}" frameborder="0" allowfullscreen></iframe>
+            <div class="video-wrapper">
+              <iframe src="${item.url}" frameborder="0" allowfullscreen></iframe>
+            </div>
             <p><strong>${item.title}</strong><br>${item.date}</p>
           `;
         }
@@ -62,7 +64,7 @@ function showModal(item) {
   modal.innerHTML = `
     <div class="modal-content">
       <span class="close">&times;</span>
-      ${item.media_type === 'image' ? `<img src="${item.hdurl}" alt="${item.title}" />` : `<iframe src="${item.url}" frameborder="0" allowfullscreen></iframe>`}
+      ${item.media_type === 'image' ? `<img src="${item.hdurl || item.url}" alt="${item.title}" />` : `<iframe src="${item.url}" frameborder="0" allowfullscreen></iframe>`}
       <h2>${item.title} (${item.date})</h2>
       <p>${item.explanation}</p>
     </div>
@@ -78,4 +80,3 @@ button.addEventListener('click', () => {
 });
 
 showRandomFact();
-
